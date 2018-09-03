@@ -11,13 +11,14 @@ public class Track {
 
     private String name;
     private int position;
-    private TrackArtist artist;
+    private Artist artist;
+
 
     public Track(String aName, String aArtist, int aPosition)
     {
         name = aName;
         position = aPosition;
-        artist = new TrackArtist(aArtist);
+        artist = new Artist(aArtist);
     }
 
 
@@ -46,14 +47,15 @@ void setName(String aName)
 
 
 
+
 /**
- * Returns the name of the artist to the receiver.
- * @return aName
+ * Sends the name of the album artist to the receiver
+ * @return artist name
  */
 
-String getArtist()
+String getArtistName()
 {
-    return name;
+    return artist.getName();
 }
 
 
@@ -61,14 +63,17 @@ String getArtist()
 
 
 /**
- * Sets the name of the artist to the value aName
+ * Sets the name of the album artist to the value of aName
  * @param aName
  */
 
-void setArtist(String aName)
+void setArtistName(String aName)
 {
-    name = aName;
+    artist.setName(aName);
 }
+
+
+
 
 
 

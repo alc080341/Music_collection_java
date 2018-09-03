@@ -10,8 +10,7 @@ import java.util.*;
 public class Album {
 
 private String name;
-private final Collection<Track> tracks;
-private AlbumArtist artist;
+private Artist artist;
 
 
 
@@ -24,8 +23,7 @@ private AlbumArtist artist;
 public Album(String aName, String aArtist)
 {
     name = aName;
-    tracks = new HashSet<Track>();
-    artist = new AlbumArtist(aArtist);
+    artist = new Artist(aArtist);
 }
 
 
@@ -59,7 +57,7 @@ void setName(String aName)
 
 /**
  * Sends the name of the album artist to the receiver
- * @return aName
+ * @return artist name
  */
 
 String getArtistName()
@@ -83,46 +81,6 @@ void setArtistName(String aName)
 
 
 
-/**
-* Adds Track aTrack to tracks
-* @param aTrack
-*/
-
-void add(Track aTrack)
-{
-    tracks.add(aTrack);
-}
-
-
-
-
-
-
-/**
-* Returns the tracks on the album
-* @return a collection of all the linked flight objects
-*/
-
-Collection<Track> getTracks()
-{
-    return new HashSet<Track>(tracks);
-}
-
-
-
-
-
-/**
-* Removed the given track (if present)
-* from those linked to the album
-* The reference to aTrack is removed.
-* @param aTrack
-*/
-
-void remove(Track aTrack)
-{
-    tracks.remove(aTrack);
-}
 
 
 
