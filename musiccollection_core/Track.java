@@ -12,11 +12,10 @@ public class Track
     private Artist artist;
     private Album album;
 
-    Track(String aName, String aArtist, Album anAlbum)
+    Track(String aName, String aArtist)
     {
         name = aName;
         artist = new Artist(aArtist);
-        album = anAlbum;
     }
 
     /**
@@ -80,6 +79,6 @@ public class Track
     @Override
     public String toString()
     {
-        return name;
+        return getName() + " by " + getArtistName();
     }
 }

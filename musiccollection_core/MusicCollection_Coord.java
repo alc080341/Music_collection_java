@@ -10,38 +10,57 @@ import java.util.*;
  * The coordinating class for the music collection system
  * @author Tony Chambers
  */
-public class MusicCollection_Coord
+public final class MusicCollection_Coord
 {
 
     /**
      * a collection of all of the album objects
      */
     private final Collection<Album> albums;
-    /**
-     * a collection of all of the track objects
-     */
-    private final Collection<Track> tracks;
-    /**
-     * a collection of all of the artist objects
-     */
-    private final Collection<Artist> artist;
 
     public MusicCollection_Coord()
     {
         albums = new HashSet<Album>();
-        tracks = new HashSet<Track>();
-        artist = new HashSet<Artist>();
+
+
+        // populate with test data
+        Album album1 = new Album("Example Album 1","Example artist");
+        Track albumTrack1 = new Track("track 1","Example Artist");
+        album1.addTrack(albumTrack1);
+        Track albumTrack2 = new Track("track 2","Example Artist");
+        album1.addTrack(albumTrack2);
+
+
+
+        Album album2 = new Album("Example Album 2","Example artist 2");
+        Track albumTrack3 = new Track("track 3","Example Artist");
+        album2.addTrack(albumTrack3);
+        Track albumTrack4 = new Track("track 4","Example Artist");
+        album2.addTrack(albumTrack4);
+        albums.add(album1);
+        albums.add(album2);
     }
 
-    /**
+
+
+
+      /**
      * Creates a new album object with name of value aName and adds it to albums collection
      * returns true if album is added successfully
      * @param aName
+     * @return true or false
      */
-    public void addAlbum(String aName, String artistName)
+    public boolean addAlbum(String aName, String artistName)
     {
         Album newAlbum = new Album(aName, artistName);
-        albums.add(newAlbum);
+        if(albums.add(newAlbum))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /**
@@ -53,81 +72,61 @@ public class MusicCollection_Coord
         albums.remove(anAlbum);
     }
 
-    /**
-     * Changes the name of Album object anAlbum to aName, and changes name of Artist object aArtist to aArtistName
+
+
+
+     /**
+     * Removes all of the Track objects from the collection
+     * of Track objects linked to anAlbum
      * @param anAlbum
-     * @param aName
-     * @param aArtistName
      */
-    public void editAlbum(Album anAlbum, String aName, String aArtistName)
+    public void removeAllTracks(Album anAlbum)
     {
-        anAlbum.setName(aName);
-        anAlbum.setArtistName(aArtistName);
+         anAlbum.removeAllTracks();
     }
 
 
 
     /**
-     * If there is not already a track with the given name then records a track with given name
-     * and returns true. Else returns false.
+     * Checks to see if the album exists in the collection of albums. If it does,
+     * adds album to collection of albums and returns true. Otherwise, returns false.
      * @param aName
      * @return
      */
     public boolean addTrack(String aName, String aArtistName, Album anAlbum)
     {
-        boolean alreadyExists = true;
-        for (Track eachTrack : tracks)
-        {
-            if (eachTrack.getName().equals(aName))
-            {
-                return false;
-            }
-        }
-
         for (Album eachAlbum : albums)
         {
             if (eachAlbum == anAlbum)
             {
-                Track track = new Track(aName, aArtistName, anAlbum);
+                Track track = new Track(aName, aArtistName);
                 eachAlbum.addTrack(track);
-                tracks.add(track);
+                return true;
             }
         }
-
-        return true;
+        return false;
     }
 
 
+
+
     /**
-     * Sets the name of Track object aTrack to aName, and sets the name of linked Artist object to aArtistName
+     * Checks to see if track aTrack exits in anAlbum. If it does, removes track from collection
+     * of tracks linked to anAlbum and returns true. Otherwise returns false.
      * @param aTrack
-     * @param aName
-     * @param aArtistName
-     * @return boolean
+     * @return true or false
      */
-    public boolean editTrack(Track aTrack, String aName, String aArtistName)
+    public boolean removeTrack(Track aTrack, Album anAlbum)
     {
-        boolean alreadyExists = true;
-        for (Track eachTrack : tracks)
+        for (Album eachAlbum : albums)
         {
-            if (eachTrack == aTrack)
+            if (eachAlbum == anAlbum)
             {
-                aTrack.setName(aName);
-                aTrack.setArtistName(aArtistName);
-                return false;
+                anAlbum.removeTrack(aTrack);
+                return true;
             }
         }
-        return true;
-    }
-
-
-    /**
-     * Removes Track object aTrack
-     * @param aTrack
-     */
-    public void removeTrack(Track aTrack)
-    {
-        tracks.remove(aTrack);
+        return false;
     }
 
 
@@ -141,6 +140,8 @@ public class MusicCollection_Coord
         return new HashSet<Album>(albums);
     }
 
+
+
     /**
      * Returns all of the Track objects linked to anAlbum
      * @param anAlbum
@@ -150,6 +151,15 @@ public class MusicCollection_Coord
     {
         Collection trackCollection = new HashSet<Track>();
         trackCollection = anAlbum.getAllTracks();
-        return new HashSet<Track>(trackCollection);
+        if(trackCollection.size() > 0)
+        {
+            return new HashSet<Track>(trackCollection);
+        }
+        else
+        {
+            Track aTrack = new Track("Please add a track", "Please add an artist");
+            trackCollection.add(aTrack);
+            return new HashSet<Track>(trackCollection);
+        }
     }
 }

@@ -21,7 +21,7 @@ public class Album
     {
         name = aName;
         tracks = new HashSet<Track>();
-        artist.setName(artistName);
+        artist = new Artist(artistName);
     }
 
     /**
@@ -56,7 +56,16 @@ public class Album
         tracks.remove(aTrack);
     }
 
+
     /**
+     * Removes all track object links from the collection of tracks. Returns true if successful
+     */
+    void removeAllTracks()
+    {
+        tracks = new HashSet<Track>();
+    }
+
+     /**
      * Returns the name of the Album object to the receiver
      * @return name
      */
@@ -100,6 +109,6 @@ public class Album
     @Override
     public String toString()
     {
-        return name;
+        return getName() + " by " + getArtistName();
     }
 }
